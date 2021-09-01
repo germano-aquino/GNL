@@ -6,7 +6,7 @@
 #    By: grenato- <grenato-@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/21 11:25:54 by grenato-          #+#    #+#              #
-#    Updated: 2021/08/21 15:27:07 by grenato-         ###   ########.fr        #
+#    Updated: 2021/08/29 22:48:57 by grenato-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 CC = clang
 
 # define any compile-time flags
-CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=99
+CFLAGS = -Wall -Wextra -Werror -I $(H_SOURCE) -D BUFFER_SIZE=99
 
 # name of the project
 NAME = get_next_line.a
@@ -25,7 +25,9 @@ NAME = get_next_line.a
 # .c bonus files
 #B_SOURCE =	
 # .c mandatory files
-C_SOURCE =	ft_get_next_line.c 
+C_SOURCE =	get_next_line.c\
+			get_next_line_utils.c\
+			main.c
 
 # .h file
 H_SOURCE = get_next_line.h
@@ -49,5 +51,5 @@ fclean: clean
 
 re:	fclean all
 
-#bonus: $(B_OBJ)
+#bonus: $(OBJ) $(B_OBJ)
 #	ar rcs $(NAME) $(OBJ) $(B_OBJ)
