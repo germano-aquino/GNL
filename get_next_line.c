@@ -5,59 +5,53 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static void	ft_cpyline(char *line, char *buff, int i_index, int index)
+static void	ft_cpyline(char *line, char *buff, int len)
 {
 	int	i;
 
 	i = 0;
-	while (i < index - i_index)
+	while (i < len)
 	{
-		line[i] = buff[i_index + i];
-		i++;
-	}
-	if (line[i] == '\0')
-	{
-		line[i] = '\n';
+		line[i] = *(buff - len + i);
 		i++;
 	}
 	line[i] = '\0';
+}
+
+static void	ft_init_buff(char *buff, int fd)
+{
+	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+
+	if (read(fd, buff, BUFFER_SIZE) == 0)
+	{
+		free(buff);
+	}
+	buff[BUFFER_SIZE] = '\0';
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*buff;
 	char	*line;
-	int		sz;
-	static int	index;
-	int			initial_index;
+	int		line_length;
+	int		end_of_line;
 
-	if (index == -1)
+	if (buff == NULL)
+		ft_init_buff(buff, fd);
+	if (*buff == '\0')
 		return (NULL);
-	initial_index = index;
-	if (index == 0)
+	line_length = 0;
+	end_of_line = 0;
+	while (end_of_line != 1 && *buff != '\0')
 	{
-		buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (buff == NULL)
-			return (NULL);
-		buff[BUFFER_SIZE] = '\0';
-		if (read(fd, buff, BUFFER_SIZE) == 0)
-			return (NULL);
+		line_length++;
+		buff++;
+		if (*buff == '\n')
+			end_of_line = 1;
 	}
-	//printf("size return is: %d\n", sz);
-	while (buff[index] != '\n' && buff[index] != '\0')
-		index++;
-	//printf("buff[index] is %c\n", buff[index]);
-	line = malloc(sizeof(char) * (index - initial_index + 2));
+	line = malloc(sizeof(char) * (line_length + 1));
 	if (line == NULL)
 		return (NULL);
-	//printf("I'm here %d\n", index);
-	//printf("%s", buff);
-	ft_cpyline(line, buff, initial_index, index);
-	if (buff[index] == '\0')
-		{
-			index = -2;
-			free(buff);
-		}
-	index++;
+	ft_cpyline(line, buff, line_length);
 	return (line);
 }
