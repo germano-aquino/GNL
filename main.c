@@ -19,4 +19,5 @@ int main()
 	} while (line != NULL && breakLoop != 20);
 	free(line);
 	close(fd);
+	return (0);
 }
