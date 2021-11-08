@@ -1,79 +1,65 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include "get_next_line.h"
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE -1
+ #define BUFFER_SIZE 0
 #endif
-
-static void	ft_cpyline(char *line, char *buff, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		line[i] = *(buff - len + i);
-		i++;
-	}
-	line[i] = '\0';
-}
-
-static int	ft_findEndOfLine(char **buff)
-{
-	int	end_of_line;
-	int	line_len;
-
-	end_of_line = 0;
-	line_len = 0;
-	while (end_of_line != 1 && **buff != '\0')
-	{
-		if (**buff == '\n')
-			end_of_line = 1;
-		(*buff)++;
-		line_len++;
-	}
-	return (line_len);
-}
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
 	static char	*buff;
-	char		*line;
-	char		*rest_of_line;
-	char		*new_line;
-	int			line_length;
+	char	*line;
+	int		index;
+	int		line_size;
+	int		sz;
 
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 255)
+		return (NULL);
 	if (buff == NULL)
 	{
-		buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		buff[BUFFER_SIZE] = '\0';
-		if (read(fd, buff, BUFFER_SIZE) == 0)
-			free(buff);
+		buff = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (!buff)
+			return (NULL);
+		sz = read(fd, buff, BUFFER_SIZE);
+		if (!sz || sz == -1)
+			return (NULL);
+		buff[sz] = '\0';
 	}
+	line_size = BUFFER_SIZE;
+	line = (char *) malloc(sizeof(char) * (line_size + 1));
+	index = 0;
+	if (*buff == '\n')
+		buff++;
 	if (*buff == '\0')
-		return (NULL);
-	line_length = ft_findEndOfLine(&buff);
-	line = malloc(sizeof(char) * (line_length + 1));
-	if (line == NULL)
-		return (NULL);
-	ft_cpyline(line, buff, line_length);
-	if (*buff == '\0' && read(fd, buff, BUFFER_SIZE) != 0)
 	{
-		buff[BUFFER_SIZE] = '\0';
-		printf("line before gnl: %s\n",line);
-		rest_of_line = get_next_line(fd);
-		printf("this is rest_line: %s\n",rest_of_line);
-		if (rest_of_line == NULL)
-			return (NULL);
-		new_line = ft_strcat(line, rest_of_line);
-		printf("this is line: %s\n",line);
-		printf("this is new_line: %s\n",new_line);
-		if (new_line == NULL)
-			return (NULL);
-		free(line);
-		free(rest_of_line);
-		return (new_line);
+		sz = read(fd, buff, BUFFER_SIZE);
+		buff[sz] = '\0';
 	}
+	line[index] = *buff;
+	while (*buff != '\n')
+	{
+		buff++;
+		index++;
+		if (index % BUFFER_SIZE == 0)
+		{
+			line_size += BUFFER_SIZE;
+			line = (char *) realloc(line, line_size + 1);
+		}
+		if (*buff == '\0')
+		{
+			sz = read(fd, buff, BUFFER_SIZE);
+			if (!sz || sz == -1)
+			{
+				if (!line[0])
+					return (NULL);
+				break;
+			}
+			buff[sz] = '\0';
+		}
+		line[index] = *(buff);
+	}
+	index++;
+	line[index] = '\0';
 	return (line);
 }

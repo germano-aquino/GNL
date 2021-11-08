@@ -1,25 +1,22 @@
 #include <stdio.h>
-#include <string.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include <stdlib.h>
-
-char	*get_next_line(int fd);
+#include "get_next_line.h"
 
 int main()
 {
-	int		k = 0;
-	int		fd;
+	int	fd;
 	char	*line;
+	int		breakLoop = 0;
 
-	fd = open("test.txt", O_RDONLY);
-	line = get_next_line(fd);
-	while (line != NULL)
+	fd = open("./test.txt", O_RDONLY);
+	do
 	{
-		printf("%s", line);
-		free(line);
 		line = get_next_line(fd);
-	}
-	printf("%s", line);
+		printf("%s", line);
+		breakLoop++;
+	} while (line != NULL && breakLoop != 20);
 	free(line);
-	return (0);
+	close(fd);
 }
