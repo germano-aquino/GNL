@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grenato- <grenato-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 00:31:53 by grenato-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:53:31 by grenato-         ###   ########.fr       */
+/*   Created: 2021/11/11 10:37:02 by grenato-          #+#    #+#             */
+/*   Updated: 2021/11/11 10:53:16 by grenato-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+
+# ifndef MAX_FD
+#  define MAX_FD 256
+# endif
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1

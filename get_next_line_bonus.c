@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grenato- <grenato-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 00:31:45 by grenato-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:46:30 by grenato-         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:51:31 by grenato-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_read_from_fd(char **buff_add, int fd)
 {
@@ -76,18 +76,18 @@ char	*ft_get_line(char **buff_add, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*buff;
+	static char	*buff[MAX_FD];
 	char		*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 256)
 		return (NULL);
-	if (buff == NULL)
+	if (buff[fd] == NULL)
 	{
-		buff = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!buff || !ft_read_from_fd(&buff, fd))
+		buff[fd] = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (!buff[fd] || !ft_read_from_fd(&buff[fd], fd))
 			return (NULL);
 	}
-	line = ft_get_line(&buff, fd);
+	line = ft_get_line(&buff[fd], fd);
 	if (!line[0])
 		return (NULL);
 	return (line);
