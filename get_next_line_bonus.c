@@ -6,7 +6,7 @@
 /*   By: grenato- <grenato-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 00:31:45 by grenato-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:51:31 by grenato-         ###   ########.fr       */
+/*   Updated: 2021/11/11 11:00:33 by grenato-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_get_line(char **buff_add, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*buff[MAX_FD];
+	static char	*buff[MAX_FD + 1];
 	char		*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 256)
