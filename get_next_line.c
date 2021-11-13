@@ -6,7 +6,7 @@
 /*   By: grenato- <grenato-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 00:31:45 by grenato-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:46:30 by grenato-         ###   ########.fr       */
+/*   Updated: 2021/11/13 12:34:47 by grenato-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*ft_realloc(char *ptr, int *size)
 	}
 	new[index] = '\0';
 	free(ptr);
+	ptr = NULL;
 	return (new);
 }
 
