@@ -10,9 +10,14 @@ int main()
 	char	*line;
 	int		breakLoop = 0;
 
-	fd = open("./test.txt", O_RDONLY);
+	fd = open("./tester/files/empty", O_RDONLY);
 	do
 	{
+		if (breakLoop)
+		{
+			free(line);
+			line = NULL;
+		}
 		line = get_next_line(fd);
 		printf("%s", line);
 		breakLoop++;

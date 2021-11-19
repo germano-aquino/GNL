@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: grenato- <grenato-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 10:37:02 by grenato-          #+#    #+#             */
-/*   Updated: 2021/11/11 10:53:16 by grenato-         ###   ########.fr       */
+/*   Created: 2021/11/10 00:31:53 by grenato-          #+#    #+#             */
+/*   Updated: 2021/11/19 15:32:49 by grenato-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,24 @@
 # include <fcntl.h>
 # include <unistd.h>
 
-# ifndef MAX_FD
-#  define MAX_FD 256
-# endif
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
 
-int		ft_read_from_fd(char **buff_add, int fd);
+# ifndef MAX_FD
+#  define MAX_FD 256
+# endif
 
-char	*ft_realloc(char *ptr, int *size);
+typedef struct buffer{
+	char	*head;
+	char	*letter;
+}				buffer;
 
-char	*ft_get_line(char **buff_add, int fd);
+int		ft_read_from_fd(buffer *buff_add, int fd);
+
+char	*ft_realloc(char **ptr, int *size, int first_allocation);
+
+char	*ft_get_line(buffer *buff_add, int fd);
 
 char	*get_next_line(int fd);
 
