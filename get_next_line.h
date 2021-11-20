@@ -22,13 +22,13 @@
 # endif
 
 typedef struct buffer{
-	char	*head;
-	char	*letter;
+	char	*begin;
+	char	*end;
 }				buffer;
 
 int		ft_read_from_fd(buffer *buff_add, int fd);
 
-char	*ft_realloc(char **ptr, int *size, int first_allocation);
+char	*ft_line_alloc(char **ptr, int *size, int first_allocation);
 
 char	*ft_get_line(buffer *buff_add, int fd);
 
