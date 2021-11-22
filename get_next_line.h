@@ -6,7 +6,7 @@
 /*   By: grenato- <grenato-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 00:31:53 by grenato-          #+#    #+#             */
-/*   Updated: 2021/11/18 18:54:23 by grenato-         ###   ########.fr       */
+/*   Updated: 2021/11/21 22:37:09 by grenato-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@
 #  define BUFFER_SIZE 1
 # endif
 
-typedef struct buffer{
+typedef struct s_buffer{
 	char	*begin;
 	char	*end;
-}				buffer;
+}				t_buffer;
 
-int		ft_read_from_fd(buffer *buff_add, int fd);
+int		ft_read_from_fd(t_buffer *buff_add, int fd);
 
 char	*ft_line_alloc(char **ptr, int *size, int first_allocation);
 
-char	*ft_get_line(buffer *buff_add, int fd);
+char	*ft_get_line(t_buffer *buff_add, int fd);
 
 char	*get_next_line(int fd);
 

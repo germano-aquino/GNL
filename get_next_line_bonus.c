@@ -6,13 +6,13 @@
 /*   By: grenato- <grenato-@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 00:31:45 by grenato-          #+#    #+#             */
-/*   Updated: 2021/11/19 15:39:56 by grenato-         ###   ########.fr       */
+/*   Updated: 2021/11/21 22:48:15 by grenato-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static void	ft_free(char **ptr)
+void	ft_free(char **ptr)
 {
 	if (*ptr != NULL)
 	{
@@ -21,7 +21,7 @@ static void	ft_free(char **ptr)
 	}
 }
 
-static int	ft_read_from_fd(buffer *buff_add, int fd)
+int	ft_read_from_fd(t_buffer *buff_add, int fd)
 {
 	int	sz;
 
@@ -33,7 +33,7 @@ static int	ft_read_from_fd(buffer *buff_add, int fd)
 	return (1);
 }
 
-static char	*ft_line_alloc(char **ptr, int *size, int first_allocation)
+char	*ft_line_alloc(char **ptr, int *size, int first_allocation)
 {
 	char	*new;
 	int		index;
@@ -57,7 +57,7 @@ static char	*ft_line_alloc(char **ptr, int *size, int first_allocation)
 	return (new);
 }
 
-static char	*ft_get_line(buffer *buff_add, int fd)
+char	*ft_get_line(t_buffer *buff_add, int fd)
 {
 	char	*line;
 	int		line_size;
@@ -86,7 +86,7 @@ static char	*ft_get_line(buffer *buff_add, int fd)
 
 char	*get_next_line(int fd)
 {
-	static buffer	buff[MAX_FD];
+	static t_buffer	buff[MAX_FD];
 	char			*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 256)
